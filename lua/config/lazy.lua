@@ -21,5 +21,55 @@ require("lazy").setup({
 	
 	{ 'nvim-treesitter/nvim-treesitter', build = ":TSUpdate" },
 
-	'tpope/vim-fugitive'
+	'tpope/vim-fugitive',
+
+	{ 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x', lazy = true, config = false },
+
+	{ 'neovim/nvim-lspconfig', dependencies = { 'hrsh7th/cmp-nvim-lsp' } },
+
+	{ 'hrsh7th/nvim-cmp', dependencies = { 'L3MON4D3/LuaSnip' } },
+
+	{ 'windwp/nvim-autopairs', event = "InsertEnter", opts = {} },
+
+    { 'williamboman/mason.nvim' },
+
+    { 'williamboman/mason-lspconfig.nvim' },
+
+    { 'nvim-tree/nvim-tree.lua' },
+
+    { 'nvim-tree/nvim-web-devicons' }
+})
+
+local lsp_zero = require('lsp-zero')
+
+lsp_zero.on_attach( function (client, bufnr)
+	
+	lsp_zero.default_keymaps({ buffer = bufnr })
+end)
+
+require('mason').setup({})
+
+require('mason-lspconfig').setup({
+    handlers = {
+        lsp_zero.default_setup
+    }
+})
+
+require("nvim-tree").setup()
+
+local cmp = require("cmp")
+local cmp_action = require("lsp-zero").cmp_action()
+
+cmp.setup({
+    preselect = 'item',
+    completion = {
+        completeopt = 'menu,menuone,noinsert'
+    },
+    mapping = cmp.mapping.preset.insert({
+        ['<CR>'] = cmp.mapping.confirm({select = true}),
+        ['<C-,>'] = cmp_action.luasnip_jump_backward(),
+        ['<C-.>'] = cmp_action.luasnip_jump_forward(),
+        ['<C-Up>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-Down>'] = cmp.mapping.scroll_docs(4)
+    })
 })
