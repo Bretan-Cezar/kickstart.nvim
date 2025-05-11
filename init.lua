@@ -129,9 +129,15 @@ vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-vim.keymap.set('n', 'J', 'mzJ z')
+
+-- Maintain cursor position after appending next line to current line
+vim.keymap.set('n', 'J', 'mzJ`z')
+
+-- Replacing text with text from clipboard won't overwrite clipboard content with what
+-- was replaced
 vim.keymap.set('x', 'p', '"_dP')
-vim.keymap.set('n', 'Q', '<nop')
+
+vim.keymap.set('n', 'Q', '<nop>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -141,12 +147,7 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
-vim.keymap.set('n', '<C-S-h>', '<C-w>H', { desc = 'Move window to the left' })
-vim.keymap.set('n', '<C-S-l>', '<C-w>L', { desc = 'Move window to the right' })
-vim.keymap.set('n', '<C-S-j>', '<C-w>J', { desc = 'Move window to the lower' })
-vim.keymap.set('n', '<C-S-k>', '<C-w>K', { desc = 'Move window to the upper' })
+vim.keymap.set('n', '<C-s>', ':w<CR>', { desc = 'Save changes to current buffer' })
 
 -- **AUTOCOMMANDS**
 --  See `:help lua-guide-autocommands`
