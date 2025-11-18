@@ -646,6 +646,10 @@ require('lazy').setup({
         },
         nginx_language_server = {},
         postgres_lsp = {},
+        opencl_ls = {
+          cmd = { 'opencl-language-server' },
+          filetypes = { 'opencl', 'cl' },
+        },
         -- typescript_language_server = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
